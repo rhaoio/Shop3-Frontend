@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { setAccount } from "./store/accReducer";
-
 import Main from "./components/main";
-import Main2 from "./components/inputcollection";
 import Navbar from "./components/navbar";
 
 //This section contains all contract information required for functionality
@@ -11,7 +9,7 @@ import Navbar from "./components/navbar";
 import Inventory from "./utils/Inventory.json";
 
 //Contract Address
-const CONTRACT_ADDRESS = "0x3E4E8e1dde5549E1b2022b592fF3C5350494d1d9";
+import CONTRACT_ADDRESS from "./utils/contractAddress";
 
 interface IAppProps {
   tab?: string;
@@ -74,11 +72,9 @@ const App = ({ tab }: IAppProps) => {
       <div>
         <Navbar />
       </div>
-      {tab === "main" && (
-        <div className="bg-red-200 h-full ">
-          <Main />
-        </div>
-      )}
+      <div className="bg-red-200 h-full ">
+        <Main />
+      </div>
     </div>
   );
 };

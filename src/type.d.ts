@@ -1,9 +1,15 @@
 interface IProduct {
-  name: string;
-  description?: string;
-  location?: string;
-  qty: BigNumber;
-  externalId: string;
+  name: string; //name from contract
+  description?: string; //description from contract
+  location?: string; //location from contract
+  price: BigNumber | number; //price from contract
+  qty: BigNumber | number; //qty from contract
+  externalId: string; // externalId from contract
+  id: BigNumber | number; // internal ID used by contract
+}
+
+interface Window {
+  ethereum: any;
 }
 
 interface IAccount {

@@ -1,9 +1,6 @@
 import React from "react";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { setAccount } from "../store/accReducer";
-import { ethers } from "ethers";
-
-interface IProps {}
 
 const Navbar = () => {
   const currAccount = useAppSelector((state) => state.account);
@@ -20,14 +17,8 @@ const Navbar = () => {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-
-      /*
-       * Boom! This should print out public address once we authorize Metamask.
-       */
       console.log("Connected", accounts[0]);
       dispatch(setAccount(accounts[0]));
-      //setCurrentAccount(accounts[0]);
-      //dispatch(addAccount({ address: accounts[0] }));
     } catch (error) {
       console.log(error);
     }
@@ -45,11 +36,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 relative flex flex-row items-center h-14">
+    <nav className="bg-gray-800 relative flex  items-center h-14">
       <div className="flex items-center m-6 bg-red-300 h-10 ">
         <a
           className="inline-flex text-white bg-red-500 whitespace-nowrap"
-          href="#/"
+          href="/"
         >
           LOGO
         </a>

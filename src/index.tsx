@@ -10,12 +10,7 @@ import { store } from "./store";
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App tab="main" />}>
-          <Route path="create" element={<App tab="add" />} />
-          <Route path="invoices" element={<App tab="add" />} />
-        </Route>
-      </Routes>
+      <App />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

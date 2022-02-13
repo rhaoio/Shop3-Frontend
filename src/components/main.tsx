@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "./sidebar";
-import AddButton from "./buttons/addbutton";
+import Dashboard from "./dashboard";
 import Table from "./table";
 import InputCollection from "./inputcollection";
 import { useAppSelector } from "../hooks";
 import { ethers } from "ethers";
 import Inventory from "../utils/Inventory.json";
-const CONTRACT_ADDRESS = "0x6be954CAC436c9B015C59900b6366c168E194c0F";
+import CONTRACT_ADDRESS from "../utils/contractAddress";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Transactions from "./transactions";
 
 //Main.jsx should handle all elements from sidebar -> table information
 
 const Main = () => {
-  const [productList, setProductList] = useState<IProduct[] | null>([]);
+  const [productList, setProductList] = useState<IProduct[]>([]);
   const currAccount = useAppSelector((state) => state.account);
-  console.log(currAccount.address, "MAIN");
+  const currentLocation = useLocation();
+
   const getAllProducts = async () => {
     try {
       const { ethereum }: any = window;
@@ -39,8 +42,6 @@ const Main = () => {
             let getProductTxn = await connectedContract.getProductById(i);
             _prodList.push(getProductTxn);
           }
-
-          console.log(_prodList[0]);
           setProductList(_prodList);
         }
       } else {
@@ -58,15 +59,26 @@ const Main = () => {
     <main className="bg-red-500 h-full">
       <div className="h-full flex flex-row">
         <SideBar />
+        <div></div>
         <div className="bg-blue-500 w-full m-2">
           {/*RENDER ALL OTHER CONTENT HERE */}
-          <div className="flex flex-col ">
-            <Table productList={productList} />
-          </div>
-          <div className="bg-red-200 flex flex-col ">
-            <AddButton contractAddress={CONTRACT_ADDRESS} />
-            <InputCollection />
-          </div>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/products"
+              element={<Table productList={productList} />}
+            />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route
+              path="/addproducts"
+              element={<InputCollection productList={productList} />}
+            >
+              <Route
+                path="/addproducts/:externalId"
+                element={<InputCollection productList={productList} />}
+              />
+            </Route>
+          </Routes>
         </div>
       </div>
     </main>
